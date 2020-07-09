@@ -1,14 +1,10 @@
 'use strict';
 
-/*global variables*/
-let endpointUser = document.getElementById(`username`).value
-let requestAPI = `https://api.github.com/users/` + endpointUser + `/repos`
-const APIKey = `94bcfc7aa83ca4956aad05a14a7008722adcacfc`
-
 /*handles requests and responses to GitHub API*/
 function makeRequest() {
     console.log(`makeRequest activated`);
-
+    let endpointUser = document.getElementById('username').value
+    let requestAPI = 'https://api.github.com/users/'+endpointUser+'/repos'
     fetch(requestAPI)
         .then(response => response.json())
         .then(responseJson => createList(responseJson))
@@ -17,31 +13,35 @@ function makeRequest() {
 
 /*handles form submission*/
 function submitForm() {
-    $('form').submit(event => 
-        event.preventDefault());
+    $('form').submit(event => {
+        event.preventDefault();
         console.log(`submitForm activated`)
         makeRequest();
-    };
+    });
+};
 
 /*creates list items for each search result*/
-function createList() {
+function createList(responseJson) {
     console.log(responseJson);
     console.log(`createList activated`);
-
+    $(`watch-this`).removeClass('hidden');
     $(`.results-container`).empty();
-        for (let i=0; i < json.message; i++) {
-            $(`.results-container`).append(`<ul>
-            <h4>${reponame}</h4>
+        for (let i=0; i < responseJson.message.length; i++) {
+            /*create variables for each item*/
+            let repoURL = responseJson.message[i].html_url
+            let repoName = responseJson.message[i].name
+
+            $(`.results-container`).append(`<li>
+            <h4>${repoName}</h4>
             <a href="${repoURL}">Click here for repository</a>
-            </ul>`)
+            </li>`)
     };
 };
 
 /*handles the app*/
 function handleApp() {
     console.log(`SearchGitHub App is ready to rock`);
-    
-    $(createList);
+    $(submitForm);
 }
 
 $(handleApp);

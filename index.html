@@ -11,16 +11,17 @@
 
         <h1>GitHub User Search</h1>
         <p>Type and enter a GitHub user handle below and see all of their repositories in one place.</p>
-        <form id="username">
-            <legend>
+        <form>
+            <label>
                 GitHub user handle:
-            </legend>
-            <input type="text" value="JohnDoe1234">
+            </label>
+            <input type="text" id="username" value="mlucsterling">
+            <input type="submit" name="submit" value="submit">
         </form>
         
         <section class="hidden">
             <h2>Results</h2>
-            <li class="results-container"></li>
+            <ul class="results-container"></ul>
         </section>
 
     </section>
